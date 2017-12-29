@@ -1,5 +1,6 @@
 # jquery-fileuploader
 jQuery FileUploader Plugin.
+https://www.npmjs.com/package/jquery-fileuploader
 
 ## Usage
 You only need to add the following line to initialize the plugin.
