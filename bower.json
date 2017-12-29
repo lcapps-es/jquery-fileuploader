@@ -1,0 +1,25 @@
+{
+  "name": "jquery-fileuploader",
+  "description": "jQuery FileUploader Plugin.",
+  "main": "js/fileUploader.js",
+  "authors": [
+    "Luis Miguel Martín"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "jquery",
+    "file",
+    "uploader",
+    "fileuploader",
+    "plugin",
+    "extend"
+  ],
+  "homepage": "https://github.com/lmmartinb/jquery-fileuploader",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

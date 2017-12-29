@@ -44,5 +44,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## History of Changes
 
+### v1.0.1
+Include bower.json
+
 ### v1.0.0
 Initial version
