@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<title>FileUploader Example</title>
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="js/fileUploader.js"></script>
+		<style>
+			body{
+				background-color:#ccc;
+			}
+
+			#canvas{
+				background-color:#fff;
+				width: 500px;
+				height: 500px;
+				margin: 0 auto;
+			}
+
+			h1{
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>FileUploader Example</h1>
+		<div id="canvas" class="fileUploader"></div>
+
+		<script type="text/javascript">
+			$('.fileUploader').fileUploader();
+		</script>
+	</body>
+</html>
