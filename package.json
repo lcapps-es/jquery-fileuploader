@@ -1,6 +1,6 @@
 {
   "name": "jquery-fileuploader",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "jQuery FileUploader Plugin.",
   "main": "js/fileUploader.js",
   "scripts": {

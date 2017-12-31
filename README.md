@@ -7,6 +7,16 @@ You only need to add the following line to initialize the plugin.
 
 $(div).fileUploader();
 
+### Enabled Options
+#### DefaultImage
+Loads a default image into canvas.
+
+```
+$('#canvas2').fileUploader({
+    defaultImage: 'https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg'
+});
+```
+
 ## How It Works
 This is a simple plugin:
 
@@ -35,6 +45,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## To-Do List
 * FileUploader Options.
+    * defaultImage.
+    * ~~fileType.~~
 * Modal handler.
 * Multi image.
 * Video support.
@@ -44,6 +56,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 (If you have any suggestion please feel free to contact me)
 
 ## History of Changes
+
+### v1.0.2
+defaultImage option implemented.
 
 ### v1.0.1
 Include bower.json

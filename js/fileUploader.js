@@ -35,8 +35,13 @@ var FileUploader = {
 	/**
 	 * Attributes.
 	 */
-	fileType: "image/*", // this must be null
+	allowedOptions: [ // Allowed Option's Keys.
+		"defaultImage"
+	],
 
+	fileType: null, // fileChooser's fileType.
+	
+	defaultImage: null, // default image to load.
 
 	/**
 	 * Methods.
@@ -48,6 +53,8 @@ var FileUploader = {
 	load: function( el ) {
 		FileUploader.Makers.appendElements( el );
 		FileUploader.Makers.addClickEvents( el );
+
+		FileUploader.Makers.setDefaultImage( el );
 	},
 
 	/**
@@ -57,22 +64,36 @@ var FileUploader = {
 
 		/**
 		 * This method validate input options.
-		 * 
-		 * Dummy...
 		 */
 		validateOptions: function( options ) {
-			// nothing yet...
+			// Options must be an object.
+			if( typeof options === 'object' ) {
+				var keys = Object.keys( options ); // Get option's keys.
+				
+				// Check options.
+				keys.forEach( function( el ){
+					if (FileUploader.allowedOptions.indexOf( el ) === -1 ){
+						throw Error( 'invalid param: '+el );
+					}
+				});
+			}else{
+				throw Error( 'invalid params' );
+			}
 		},
 
 		/**
 		 * This method process options.
-		 * 
-		 * Dummy...
 		 */
 		processOptions: function( options ) {
 			FileUploader.Options.validateOptions( options );
 
-			// nothing yet....
+			// FileChooserType: ONLY IMAGES FOR NOW.
+			FileUploader.fileType = "image/*";
+
+			// Default Image.
+			if( options.defaultImage !== undefined ){
+				FileUploader.defaultImage = options.defaultImage;
+			}
 		}
 
 	},
@@ -125,16 +146,35 @@ var FileUploader = {
 			var f = FileUploader.Files.getFile( id );
 
 			// Get File Orientation.
-			FileUploader.Files.getOrientation( f, function( orientation ) {
+			FileUploader.Image.getOrientation( f, function( orientation ) {
 
 				var file = new FileReader();
 				file.readAsDataURL( f );
 				file.onload = function( ev ) {
 					// changeCanvas to show image.
-					FileUploader.Files.changeCanvas( ev, el, orientation );
+					FileUploader.Image.changeCanvas( ev, el, orientation );
 				}
 
 			});
+		},
+
+		/**
+		 * Set's default image.
+		 */
+		setDefaultImage: function( el ) {
+			if( FileUploader.defaultImage !== null ){
+
+				var id = $(el).attr('id');
+				var canvasId = 'canvas_'+id;
+
+				var img = new Image();
+				img.src = FileUploader.defaultImage;
+				img.onload = function( ev ){
+					var canvas = document.getElementById( canvasId );
+					FileUploader.Image.resizeImage( img, canvas );
+				}
+
+			}
 		}
 
 	},
@@ -155,6 +195,42 @@ var FileUploader = {
 				return document.getElementById( inputId ).files[0];
 			}
 		},
+	},
+
+	/**
+	 * Image Methods.
+	 */
+	Image: {
+
+		/**
+		 * Resize Image into canvas.
+		 */
+		resizeImage: function( image, canvas ){
+			var fullHeight = canvas.height;
+			var fullWidth = canvas.width;
+
+			// gets ratio between width & height.
+			var diff = image.width / image.height;
+
+			if( image.height > image.width ){
+				// height will be max canvas size, width variable.
+				var height = fullHeight;
+				var width = height * diff;
+			}else{
+				// width will be max canvas size, height variable.
+				var width = fullWidth;
+				var height = width / diff;
+			}
+
+			var x = ((canvas.width - width) / 2);
+			var y = ((canvas.height - height) / 2);
+
+			// print image into canvas.
+			var ctx = canvas.getContext("2d");
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.drawImage(image, x, y, width, height);
+		},
+
 
 		/**
 		 * Change canvas drawing image.
@@ -173,32 +249,10 @@ var FileUploader = {
 			image.onload = function() {
 				// get canvas size.
 				var canvas = document.getElementById( canvasId );
-				var fullHeight = canvas.height;
-				var fullWidth = canvas.width;
-
-				// gets ratio between width & height.
-				var diff = image.width / image.height;
-	
-				if( image.height > image.width ){
-					// height will be max canvas size, width variable.
-					var height = fullHeight;
-					var width = height * diff;
-				}else{
-					// width will be max canvas size, height variable.
-					var width = fullWidth;
-					var height = width / diff;
-				}
-
-				var x = ((canvas.width - width) / 2);
-				var y = ((canvas.height - height) / 2);
-	
-				// print image into canvas.
-				var ctx = canvas.getContext("2d");
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
-				ctx.drawImage(image, x, y, width, height);
+				FileUploader.Image.resizeImage( image, canvas );
 				
 				// rotate image if needed.
-				FileUploader.Files.rotate( canvasId, orientation );
+				FileUploader.Image.rotate( canvasId, orientation );
 			}
 		},
 

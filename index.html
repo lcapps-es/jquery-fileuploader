@@ -8,7 +8,7 @@
 				background-color:#ccc;
 			}
 
-			#canvas{
+			#canvas, #canvas2{
 				background-color:#fff;
 				width: 500px;
 				height: 500px;
@@ -23,9 +23,15 @@
 	<body>
 		<h1>FileUploader Example</h1>
 		<div id="canvas" class="fileUploader"></div>
+		<h1>FileUploader Example 2: With Default Image</h1>
+		<div id="canvas2" class="fileUploader"></div>
 
 		<script type="text/javascript">
-			$('.fileUploader').fileUploader();
+			$('#canvas').fileUploader();
+
+			$('#canvas2').fileUploader({
+				defaultImage: 'https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg'
+			});
 		</script>
 	</body>
 </html>
