@@ -10,13 +10,28 @@ You only need to add the following line to initialize the plugin.
 $(div).fileUploader();
 
 ### Enabled Options
-#### DefaultImage
+#### Opt: DefaultImage
 Loads a default image into canvas.
 
 ```
 $('#canvas2').fileUploader({
     defaultImage: 'https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg'
 });
+```
+#### Opt: readonly
+Enables readonly canvas.
+
+```
+$('#canvas3').fileUploader({
+    defaultImage: 'https://www.codeproject.com/KB/GDI-plus/ImageProcessing2/flip.jpg',
+    readonly: 1
+});
+```
+### FileUploader Changes Detection.
+When an image is uploaded, it activates an attribute (data-changes) in the container div.
+
+```
+$('#canvas2').data('changed');
 ```
 
 ## How It Works
@@ -47,19 +62,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## To-Do List
 * FileUploader Options.
-    * defaultImage.
-    * ~~fileType.~~
+    * ~~defaultImage.~~
+    * fileType.
+    * ~~readonly.~~
 * Modal handler.
 * Multi image.
 * Video support.
 * Cropper.
 * Rotate buttons.
-* Any method to detect if an image has changed.
-* readonly option.
+* ~~Any method to detect if an image has changed.~~
 
 (If you have any suggestion please feel free to contact me)
 
 ## History of Changes
+### v1.0.3
+readonly option and data-change attribute added.
 
 ### v1.0.2
 defaultImage option implemented.

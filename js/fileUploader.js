@@ -36,12 +36,15 @@ var FileUploader = {
 	 * Attributes.
 	 */
 	allowedOptions: [ // Allowed Option's Keys.
-		"defaultImage"
+		"defaultImage",
+		"readonly"
 	],
 
 	fileType: null, // fileChooser's fileType.
 	
 	defaultImage: null, // default image to load.
+
+	readonly: null, // readonly option.
 
 	/**
 	 * Methods.
@@ -94,6 +97,10 @@ var FileUploader = {
 			if( options.defaultImage !== undefined ){
 				FileUploader.defaultImage = options.defaultImage;
 			}
+
+			if( options.readonly !== undefined ){
+				FileUploader.readonly = options.readonly;
+			}
 		}
 
 	},
@@ -131,9 +138,14 @@ var FileUploader = {
 		addClickEvents: function( el ) {
 			var id = $(el).attr('id');
 	
-			$( '#canvas_'+id ).click(function(){
-				$( '#file_'+id ).trigger('click');
-			});
+			// if readonly option isn't enable.
+			if( FileUploader.readonly !== 1 && FileUploader.readonly !== true ){
+
+				$( '#canvas_'+id ).click(function(){
+					$( '#file_'+id ).trigger('click');
+				});
+
+			}
 		},
 
 		/**
@@ -253,6 +265,8 @@ var FileUploader = {
 				
 				// rotate image if needed.
 				FileUploader.Image.rotate( canvasId, orientation );
+
+				$(el).parent().attr('data-changed', 1);
 			}
 		},
 
