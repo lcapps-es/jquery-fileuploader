@@ -55,6 +55,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 * Cropper.
 * Rotate buttons.
 * Any method to detect if an image has changed.
+* readonly option.
 
 (If you have any suggestion please feel free to contact me)
 
