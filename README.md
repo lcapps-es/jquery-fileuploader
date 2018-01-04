@@ -36,8 +36,8 @@ $('#canvas4').fileUploader({
 });
 ```
 Available Values:
-    - FileUploader.Types.IMAGE: "image/*"
-    - FileUploader.Types.VIDEO: "video/*"
+* FileUploader.Types.IMAGE: "image/*"
+* FileUploader.Types.VIDEO: "video/*"
 
 ### FileUploader Changes Detection.
 When an image is uploaded, it activates an attribute (data-changes) in the container div.
