@@ -1,163 +1,46 @@
-/**
- * JavaScript FileUploader Class.
- * 
+/**************************************************************
+ * JavaScript FileUploader
+ * @version v1.1.0
+ *
+ * @description
  * The way to use this plugin is as follows:
  * 	1. Creates a div where the image will be previewed
  *	2. Initialize fileUploader plugin: $(div).fileUploader();
  * 
- * @example $(div).fileUploader();
+ * @see https://github.com/lmmartinb/jquery-fileuploader
  * @author Luis Miguel Martín
- */
+ * 
+ * Copyright (c) 2017 - Licensed MIT
+ **************************************************************/
 
-'use strict';
-
-/**
- * jQuery fileUploader extension.
- */
-$.fn.extend({
-	fileUploader: function( options ){
-		// fileUploader Options.
-		var options = ( options === undefined ) ? {} : options;
-		FileUploader.Options.processOptions( options );
-
-		// for each element, load fileUploader elements.
-		this.each(function(){
-			FileUploader.load( this );
-		});
-	}
-
-});
 
 /**
- * FileUploader Methods.
+ * FileUploader Globals.
  */
 var FileUploader = {
 	/**
-	 * Attributes.
+	 * Constant Types.
 	 */
-	allowedOptions: [ // Allowed Option's Keys.
-		"defaultImage",
-		"readonly"
-	],
-
-	fileType: null, // fileChooser's fileType.
-	
-	defaultImage: null, // default image to load.
-
-	readonly: null, // readonly option.
-
-	/**
-	 * Methods.
-	 */
-
-	/**
-	 * Main Method. Add elements into div.
-	 */
-	load: function( el ) {
-		FileUploader.Makers.appendElements( el );
-		FileUploader.Makers.addClickEvents( el );
-
-		FileUploader.Makers.setDefaultImage( el );
+	Types: {
+		IMAGE: "image/*",
+		VIDEO: "video/*"
 	},
 
 	/**
-	 * Options Methods.
+	 * Onchange Methods.
 	 */
-	Options: {
+	OnChange: {
 
 		/**
-		 * This method validate input options.
+		 * Onchange's Image method.
 		 */
-		validateOptions: function( options ) {
-			// Options must be an object.
-			if( typeof options === 'object' ) {
-				var keys = Object.keys( options ); // Get option's keys.
-				
-				// Check options.
-				keys.forEach( function( el ){
-					if (FileUploader.allowedOptions.indexOf( el ) === -1 ){
-						throw Error( 'invalid param: '+el );
-					}
-				});
-			}else{
-				throw Error( 'invalid params' );
-			}
-		},
-
-		/**
-		 * This method process options.
-		 */
-		processOptions: function( options ) {
-			FileUploader.Options.validateOptions( options );
-
-			// FileChooserType: ONLY IMAGES FOR NOW.
-			FileUploader.fileType = "image/*";
-
-			// Default Image.
-			if( options.defaultImage !== undefined ){
-				FileUploader.defaultImage = options.defaultImage;
-			}
-
-			if( options.readonly !== undefined ){
-				FileUploader.readonly = options.readonly;
-			}
-		}
-
-	},
-
-	/**
-	 * Makers Methods.
-	 */
-	Makers: {
-
-		/**
-		 * Appends needed elements into div.
-		 */
-		appendElements: function( el ) {
-			// Gets div info.
-			var width = $(el).width();
-			var height = $(el).height();
-			var id = $(el).attr('id');
-	
-			// Append canvas.
-			var canvas = $('<canvas id="canvas_'+id+'" width="'+width+'" height="'+height+'"></canvas>');
-			$(el).append( canvas );
-	
-			// Only accept's custom fileType.
-			var fileType = ( FileUploader.fileType !== null ) ? ' accept="'+FileUploader.fileType+'" '  : "";
-	
-			// Append input file.
-			var inputFile = $('<input onchange="FileUploader.Makers.change(this)" id="file_'+id+'" type="file" style="display:none" '+fileType+'/>');
-			$(el).append( inputFile );
-	
-		},
-
-		/**
-		 * Creates canvas click event.
-		 */
-		addClickEvents: function( el ) {
-			var id = $(el).attr('id');
-	
-			// if readonly option isn't enable.
-			if( FileUploader.readonly !== 1 && FileUploader.readonly !== true ){
-
-				$( '#canvas_'+id ).click(function(){
-					$( '#file_'+id ).trigger('click');
-				});
-
-			}
-		},
-
-		/**
-		 * Onchange's file method.
-		 */
-		change: function( el ) {
+		changeImage: function( el ) {
 			var id = $(el).attr('id');
 
-			// Get file
+			// Gets file
 			var f = FileUploader.Files.getFile( id );
 
-			// Get File Orientation.
+			// Gets File Orientation.
 			FileUploader.Image.getOrientation( f, function( orientation ) {
 
 				var file = new FileReader();
@@ -170,27 +53,11 @@ var FileUploader = {
 			});
 		},
 
-		/**
-		 * Set's default image.
-		 */
-		setDefaultImage: function( el ) {
-			if( FileUploader.defaultImage !== null ){
-
-				var id = $(el).attr('id');
-				var canvasId = 'canvas_'+id;
-
-				var img = new Image();
-				img.src = FileUploader.defaultImage;
-				img.onload = function( ev ){
-					var canvas = document.getElementById( canvasId );
-					FileUploader.Image.resizeImage( img, canvas );
-				}
-
-			}
+		changeVideo: function( el ) {
+			console.log('UNIMPLEMENTED METHOD.', el);
 		}
-
 	},
-	
+
 	/**
 	 * Files Methods.
 	 */
@@ -332,4 +199,225 @@ var FileUploader = {
 			}
 		}
 	}
-}
+};
+
+
+;(function ($) {
+
+	/**
+	 * FileUploader Internals
+	 */
+	var __FileUploader = {
+
+		/**
+		 * Options Attributes and Methods
+		 */
+		Options: {
+			allowedOptions: [ // Allowed Option's Keys.
+				"defaultImage",
+				"readonly",
+				"fileType"
+			],
+
+			/**
+			 * This method validate input options.
+			 */
+			validateOptions: function( options ) {
+				// Options must be an object.
+				if( typeof options === 'object' ) {
+					var keys = Object.keys( options ); // Get option's keys.
+				
+					// Check options.
+					keys.forEach( function( el ){
+						if (__FileUploader.Options.allowedOptions.indexOf( el ) === -1 ){
+							throw Error( 'invalid param: '+el );
+						}
+					});
+				}else{
+					throw Error( 'invalid params' );
+				}
+			},
+
+			/**
+			 * This method process options.
+			 */
+			processOptions: function( options ) {
+				__FileUploader.Options.validateOptions( options );
+
+				// FileChooserType: IMAGES BY DEFAULT FOR NOW.
+				if( options.fileType === undefined ){
+					options.fileType = FileUploader.Types.IMAGE;
+				}
+
+				return options;
+			}
+		},
+
+		/**
+		 * Makers Methods.
+		 */
+		Makers: {
+
+			/**
+			 * Image Makers.
+			 */
+			ImageMakers: {
+				/**
+				 * Creates Image Canvas.
+				 */
+				createCanvas: function( id, width, height ) {
+					return $('<canvas id="canvas_'+id+'" width="'+width+'" height="'+height+'"></canvas>');
+				},
+
+				/**
+				 * Gets onchange image name.
+				 */
+				getChangeName: function(){
+					return 'changeImage';
+				}
+			},
+
+			/**
+			 * Video Makers.
+			 */
+			VideoMakers: {
+				/**
+				 * Creates Video Canvas.
+				 */
+				createCanvas: function( id, width, height ) {
+					return $('<video controls id="canvas_'+id+'" width="'+width+'" height="'+height+'"></video>');
+				},
+
+				/**
+				 * Gets onchange video name.
+				 */
+				getChangeName: function(){
+					return 'changeVideo';
+				}
+			},
+
+			/**
+			 * Adapter Method
+			 */
+			Adapter: {
+				get: function( options ){
+					if( options.fileType === FileUploader.Types.IMAGE ){
+						return __FileUploader.Makers.ImageMakers;
+					}else if( options.fileType === FileUploader.Types.VIDEO ){
+						return __FileUploader.Makers.VideoMakers;
+					}else{
+						throw Error( 'unimplemented option' );
+					}
+				}
+			},
+
+			/**
+			 * Appends needed elements into div.
+			 */
+			appendElements: function( el, options ) {
+				// Gets div info.
+				var width = $(el).width();
+				var height = $(el).height();
+				var id = $(el).attr('id');
+
+				var maker = __FileUploader.Makers.Adapter.get( options );
+		
+				// Append canvas.
+				var canvas = maker.createCanvas( id, width, height );
+				$(el).append( canvas );
+		
+				// Only accept's custom fileType.
+				var fileType = ( options.fileType !== null ) ? ' accept="'+options.fileType+'" '  : "";
+		
+				// Append input file.
+				var inputFile = $('<input onchange="FileUploader.OnChange.'+maker.getChangeName()+'(this)" id="file_'+id+'" type="file" style="display:none" '+fileType+'/>');
+				$(el).append( inputFile );
+			},
+
+			/**
+			 * Creates canvas click event.
+			 */
+			addClickEvents: function( el, options ) {
+				var id = $(el).attr('id');
+		
+				// if readonly option isn't enable.
+				if( options.readonly !== 1 && options.readonly !== true ){
+
+					$( '#canvas_'+id ).click(function(){
+						$( '#file_'+id ).trigger('click');
+					});
+
+				}
+			},
+
+			/**
+			 * Onchange's file method.
+			 */
+			change: function( el ) {
+				var id = $(el).attr('id');
+
+				// Get file
+				var f = FileUploader.Files.getFile( id );
+
+				// Get File Orientation.
+				FileUploader.Image.getOrientation( f, function( orientation ) {
+
+					var file = new FileReader();
+					file.readAsDataURL( f );
+					file.onload = function( ev ) {
+						// changeCanvas to show image.
+						FileUploader.Image.changeCanvas( ev, el, orientation );
+					}
+
+				});
+			},
+
+			/**
+			 * Set's default image.
+			 */
+			setDefaultImage: function( el, options ) {
+				if( options.defaultImage !== undefined && options.defaultImage !== null ){
+
+					var id = $(el).attr('id');
+					var canvasId = 'canvas_'+id;
+
+					var img = new Image();
+					img.src = options.defaultImage;
+					img.onload = function( ev ){
+						var canvas = document.getElementById( canvasId );
+						FileUploader.Image.resizeImage( img, canvas );
+					}
+
+				}
+			}
+		},
+
+		/**
+		 * Main Method. Add elements into div.
+		 */
+		load: function( el, options ) {
+			__FileUploader.Makers.appendElements( el, options );
+			__FileUploader.Makers.addClickEvents( el, options );
+
+			__FileUploader.Makers.setDefaultImage( el, options );
+		}
+	};
+
+	/**
+	 * FileUploader Main Method.
+	 * 
+	 * @param {} options 
+	 */
+	function fileUploader( options ) {
+		var options = ( options === undefined ) ? {} : options;
+
+		var __options = __FileUploader.Options.processOptions( options )
+		this.each(function(){
+			__FileUploader.load( this, __options );
+		});
+	}
+
+	// jQuery Extension
+	$.fn.fileUploader = fileUploader;
+
+}(window.jQuery));

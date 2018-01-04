@@ -63,7 +63,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ## To-Do List
 * FileUploader Options.
     * ~~defaultImage.~~
-    * fileType.
+    * ~~fileType.~~
     * ~~readonly.~~
 * Modal handler.
 * Multi image.
@@ -75,6 +75,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 (If you have any suggestion please feel free to contact me)
 
 ## History of Changes
+### v1.1.0
+Code refactor.
+Fix #1 - Scope Problems.
+FileType Option Included.
+
 ### v1.0.3
 readonly option and data-change attribute added.
 
