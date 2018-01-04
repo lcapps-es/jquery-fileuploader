@@ -53,8 +53,22 @@ var FileUploader = {
 			});
 		},
 
+		/**
+		 * Onchange's Video Method.
+		 */
 		changeVideo: function( el ) {
-			console.log('UNIMPLEMENTED METHOD.', el);
+			var id = $(el).attr('id');
+			var canvas = $(el).prev();
+
+			// Gets file
+			var f = FileUploader.Files.getFile( id );
+
+			// prepare fileURL
+			var URL = window.URL || window.webkitURL;
+			var fileURL = URL.createObjectURL(f)
+
+			// Appends URL to video canvas.
+			canvas.attr('src', fileURL);
 		}
 	},
 

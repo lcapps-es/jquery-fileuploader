@@ -27,12 +27,26 @@ $('#canvas3').fileUploader({
     readonly: 1
 });
 ```
+#### Opt: fileType
+'accept' parameter for file type. The default value is IMAGE.
+
+```
+$('#canvas4').fileUploader({
+    fileType: FileUploader.Types.VIDEO
+});
+```
+Available Values:
+    - FileUploader.Types.IMAGE: "image/*"
+    - FileUploader.Types.VIDEO: "video/*"
+
 ### FileUploader Changes Detection.
 When an image is uploaded, it activates an attribute (data-changes) in the container div.
 
 ```
 $('#canvas2').data('changed');
 ```
+### Video Support.
+To use video support, you just need to add fileType option as VIDEO.
 
 ## How It Works
 This is a simple plugin:
@@ -65,9 +79,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     * ~~defaultImage.~~
     * ~~fileType.~~
     * ~~readonly.~~
+    * autoplay (only for videos).
+    * nocontrols (only for videos).
 * Modal handler.
 * Multi image.
-* Video support.
+* ~~Video support.~~
 * Cropper.
 * Rotate buttons.
 * ~~Any method to detect if an image has changed.~~
@@ -75,6 +91,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 (If you have any suggestion please feel free to contact me)
 
 ## History of Changes
+### v1.1.1
+Video Support
+
 ### v1.1.0
 Code refactor.
 Fix #1 - Scope Problems.
