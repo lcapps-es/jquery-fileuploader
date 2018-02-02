@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lmmartinb/jquery-fileuploader.git"
+    "url": "git+https://github.com/lcapps-es/jquery-fileuploader.git"
   },
   "keywords": [
     "jquery",
@@ -18,10 +18,10 @@
     "plugin",
     "extend"
   ],
-  "author": "Luis Miguel Martín",
+  "author": "LCApps",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lmmartinb/jquery-fileuploader/issues"
+    "url": "https://github.com/lcapps-es/jquery-fileuploader/issues"
   },
-  "homepage": "https://github.com/lmmartinb/jquery-fileuploader#readme"
+  "homepage": "https://github.com/lcapps-es/jquery-fileuploader#readme"
 }

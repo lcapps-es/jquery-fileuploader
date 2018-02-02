@@ -7,8 +7,8 @@
  * 	1. Creates a div where the image will be previewed
  *	2. Initialize fileUploader plugin: $(div).fileUploader();
  * 
- * @see https://github.com/lmmartinb/jquery-fileuploader
- * @author Luis Miguel Martín
+ * @see https://github.com/lcapps-es/jquery-fileuploader
+ * @author LCApps
  * 
  * Copyright (c) 2017 - Licensed MIT
  **************************************************************/
@@ -230,7 +230,8 @@ var FileUploader = {
 			allowedOptions: [ // Allowed Option's Keys.
 				"defaultImage",
 				"readonly",
-				"fileType"
+				"fileType",
+				"extraTrigger"
 			],
 
 			/**
@@ -361,6 +362,15 @@ var FileUploader = {
 						$( '#file_'+id ).trigger('click');
 					});
 
+				}
+
+				// appends other trigger.
+				if( options.extraTrigger !== undefined && options.extraTrigger !== null ){
+					if( $( options.extraTrigger ).length > 0 ){
+						$( options.extraTrigger ).click(function(){
+							$( '#file_'+id ).trigger('click');
+						});
+					}
 				}
 			},
 

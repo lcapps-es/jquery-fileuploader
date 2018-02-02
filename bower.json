@@ -3,7 +3,7 @@
   "description": "jQuery FileUploader Plugin.",
   "main": "js/fileUploader.js",
   "authors": [
-    "Luis Miguel Martín"
+    "LCApps"
   ],
   "license": "MIT",
   "keywords": [
@@ -14,7 +14,7 @@
     "plugin",
     "extend"
   ],
-  "homepage": "https://github.com/lmmartinb/jquery-fileuploader",
+  "homepage": "https://github.com/lcapps-es/jquery-fileuploader",
   "ignore": [
     "**/.*",
     "node_modules",

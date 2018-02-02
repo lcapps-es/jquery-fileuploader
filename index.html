@@ -8,7 +8,7 @@
 				background-color:#ccc;
 			}
 
-			#canvas, #canvas2, #canvas3, #canvas4{
+			#canvas, #canvas2, #canvas3, #canvas4, #canvas5{
 				background-color:#fff;
 				width: 500px;
 				height: 500px;
@@ -32,6 +32,10 @@
 		
 		<h1>FileUploader Example 4: video support</h1>
 		<div id="canvas4" class="fileUploader"></div>
+		
+		<h1>FileUploader Example 5: extraTrigger</h1>
+		<button id="clickExample">ClickMe!</button>
+		<div id="canvas5" class="fileUploader"></div>
 
 		<script type="text/javascript">
 			$('#canvas').fileUploader();
@@ -47,6 +51,10 @@
 
 			$('#canvas4').fileUploader({
 				fileType: FileUploader.Types.VIDEO
+			});
+
+			$('#canvas5').fileUploader({
+				extraTrigger: '#clickExample'
 			});
 		</script>
 	</body>
