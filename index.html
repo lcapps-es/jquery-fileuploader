@@ -8,7 +8,7 @@
 				background-color:#ccc;
 			}
 
-			#canvas, #canvas2, #canvas3, #canvas4, #canvas5{
+			#canvas, #canvas2, #canvas3, #canvas4, #canvas5, #canvas6, #canvas7{
 				background-color:#fff;
 				width: 500px;
 				height: 500px;
@@ -37,6 +37,12 @@
 		<button id="clickExample">ClickMe!</button>
 		<div id="canvas5" class="fileUploader"></div>
 
+		<h1>FileUploader Example 6: video support with autoplay</h1>
+		<div id="canvas6" class="fileUploader"></div>
+
+		<h1>FileUploader Example 7: video support autoplay without controls</h1>
+		<div id="canvas7" class="fileUploader"></div>
+
 		<script type="text/javascript">
 			$('#canvas').fileUploader();
 
@@ -55,6 +61,15 @@
 
 			$('#canvas5').fileUploader({
 				extraTrigger: '#clickExample'
+			});
+
+			$('#canvas6').fileUploader({
+				autoplay: true
+			});
+
+			$('#canvas7').fileUploader({
+				nocontrols: true
+
 			});
 		</script>
 	</body>

@@ -39,6 +39,37 @@ Available Values:
 * FileUploader.Types.IMAGE: "image/*"
 * FileUploader.Types.VIDEO: "video/*"
 
+#### Opt: extraTrigger
+Selector for extraTrigger.
+
+```
+<button id="clickExample">Click</button>
+...
+$('#canvas5').fileUploader({
+    extraTrigger: '#clickExample'
+});
+```
+
+#### Opt: autoplay
+Autoplay Option for videos.
+Only for FileType = Video.
+
+```
+$('#canvas6').fileUploader({
+    autoplay: true
+});
+```
+
+#### Opt: nocontrols
+Nocontrols Option for videos.
+This option activates option autoplay.
+
+```
+$('#canvas6').fileUploader({
+    nocontrols: true
+});
+```
+
 ### FileUploader Changes Detection.
 When an image is uploaded, it activates an attribute (data-changes) in the container div.
 
@@ -79,10 +110,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     * ~~defaultImage.~~
     * ~~fileType.~~
     * ~~readonly.~~
-    * autoplay (only for videos).
-    * nocontrols (only for videos).
-    * extraTrigger.
-    * defaultFaIcon.
+    * ~~autoplay (only for videos).~~
+    * ~~nocontrols (only for videos).~~
+    * ~~extraTrigger.~~
 * Modal handler.
 * Multi image.
 * ~~Video support.~~
@@ -93,6 +123,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 (If you have any suggestion please feel free to contact me)
 
 ## History of Changes
+### v1.1.2
+ExtraTrigger option.
+Autoplay option.
+Nocontrols option.
+
 ### v1.1.1
 Video Support
 

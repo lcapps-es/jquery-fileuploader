@@ -231,7 +231,9 @@ var FileUploader = {
 				"defaultImage",
 				"readonly",
 				"fileType",
-				"extraTrigger"
+				"extraTrigger",
+				"autoplay",
+				"nocontrols"
 			],
 
 			/**
@@ -264,6 +266,16 @@ var FileUploader = {
 					options.fileType = FileUploader.Types.IMAGE;
 				}
 
+				// with nocontrols, autoplay must be enabled.
+				if( options.nocontrols === 1 || options.nocontrols === true ){
+					options.autoplay = 1;
+				}
+
+				// with autplay option, fileType must be VIDEO.
+				if( options.autoplay === 1 || options.autoplay === true ){
+					options.fileType = FileUploader.Types.VIDEO;
+				}
+
 				return options;
 			}
 		},
@@ -280,7 +292,7 @@ var FileUploader = {
 				/**
 				 * Creates Image Canvas.
 				 */
-				createCanvas: function( id, width, height ) {
+				createCanvas: function( id, width, height, options ) {
 					return $('<canvas id="canvas_'+id+'" width="'+width+'" height="'+height+'"></canvas>');
 				},
 
@@ -299,8 +311,17 @@ var FileUploader = {
 				/**
 				 * Creates Video Canvas.
 				 */
-				createCanvas: function( id, width, height ) {
-					return $('<video controls id="canvas_'+id+'" width="'+width+'" height="'+height+'"></video>');
+				createCanvas: function( id, width, height, options ) {
+					var videoParams = '';
+					if( options.autoplay && ( options.autoplay == 1 || options.autoplay == true ) ){
+						videoParams += 'autoplay ';
+					}
+
+					if( options.nocontrols !== 1 && options.nocontrols !== true ){
+						videoParams += 'controls ';
+					}
+
+					return $('<video ' + videoParams + ' id="canvas_'+id+'" width="'+width+'" height="'+height+'"></video>');
 				},
 
 				/**
@@ -338,7 +359,7 @@ var FileUploader = {
 				var maker = __FileUploader.Makers.Adapter.get( options );
 		
 				// Append canvas.
-				var canvas = maker.createCanvas( id, width, height );
+				var canvas = maker.createCanvas( id, width, height, options );
 				$(el).append( canvas );
 		
 				// Only accept's custom fileType.
