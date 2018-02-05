@@ -85,7 +85,11 @@ var FileUploader = {
 			if( navigator !== undefined && navigator.galleryCamera !== undefined ) {
 				return navigator.galleryCamera.getFile( inputId );
 			}else{
-				return document.getElementById( inputId ).files[0];
+				if( document.getElementById( inputId ) !== undefined && document.getElementById( inputId ) !== null ){
+					return document.getElementById( inputId ).files[0];
+				}
+
+				return null;
 			}
 		},
 	},
@@ -404,6 +408,11 @@ var FileUploader = {
 				// Get file
 				var f = FileUploader.Files.getFile( id );
 
+				__FileUploader.Makers.setCanvasFromFile( el, f );
+				
+			},
+
+			setCanvasFromFile( el, f ) {
 				// Get File Orientation.
 				FileUploader.Image.getOrientation( f, function( orientation ) {
 
@@ -441,10 +450,15 @@ var FileUploader = {
 		 * Main Method. Add elements into div.
 		 */
 		load: function( el, options ) {
-			__FileUploader.Makers.appendElements( el, options );
-			__FileUploader.Makers.addClickEvents( el, options );
+			if( $(el).data('loaded') === undefined || $(el).data('loaded') === null ) {
 
-			__FileUploader.Makers.setDefaultImage( el, options );
+				$(el).attr('data-loaded', 1);
+
+				__FileUploader.Makers.appendElements( el, options );
+				__FileUploader.Makers.addClickEvents( el, options );
+	
+				__FileUploader.Makers.setDefaultImage( el, options );
+			}
 		}
 	};
 
@@ -460,9 +474,47 @@ var FileUploader = {
 		this.each(function(){
 			__FileUploader.load( this, __options );
 		});
+
+		// FUNCTIONS
+		this.getFile = getFile;
+		this.loadFrom = loadFrom;
+		this.fill = fill;
+
+
+
+		return this;
+	}
+
+	function getFile() {
+		var id = $(this).attr('id');
+
+		return FileUploader.Files.getFile( 'file_' + id );
+	}
+
+	function loadFrom( fileUploader ) {
+		var id = $(this).attr('id');
+
+		var el = document.getElementById( 'file_' + id );
+		var from = $( fileUploader );
+
+		var f = FileUploader.Files.getFile( 'file_' + $(from).attr('id') );
+
+		__FileUploader.Makers.setCanvasFromFile( el, f );
+	}
+
+	function fill( fileUploader ) {
+		var id = $(this).attr('id');
+
+		var to = $( fileUploader );
+		var el = document.getElementById( 'file_' + $(to).attr('id') );
+
+		var f = FileUploader.Files.getFile( 'file_' + id );
+
+		__FileUploader.Makers.setCanvasFromFile( el, f );
 	}
 
 	// jQuery Extension
 	$.fn.fileUploader = fileUploader;
+
 
 }(window.jQuery));
