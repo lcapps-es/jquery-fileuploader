@@ -412,7 +412,7 @@ var FileUploader = {
 				
 			},
 
-			setCanvasFromFile( el, f ) {
+			setCanvasFromFile: function( el, f ) {
 				// Get File Orientation.
 				FileUploader.Image.getOrientation( f, function( orientation ) {
 
