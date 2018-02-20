@@ -47,7 +47,7 @@ var FileUploader = {
 				file.readAsDataURL( f );
 				file.onload = function( ev ) {
 					// changeCanvas to show image.
-					FileUploader.Image.changeCanvas( ev, el, orientation );
+					FileUploader.Image.changeCanvas( ev, el, orientation, true );
 				}
 
 			});
@@ -132,7 +132,8 @@ var FileUploader = {
 		/**
 		 * Change canvas drawing image.
 		 */
-		changeCanvas: function( ev, el, orientation ) {
+		changeCanvas: function( ev, el, orientation, trigger ) {
+			trigger = trigger || false;
 			var canvasId = $(el).prev().attr('id');
 
 			// Revert every image transformation.
@@ -152,6 +153,7 @@ var FileUploader = {
 				FileUploader.Image.rotate( canvasId, orientation );
 
 				$(el).parent().attr('data-changed', 1);
+				if( trigger ) $(el).parent().trigger( 'fileUploaderChange' );
 			}
 		},
 

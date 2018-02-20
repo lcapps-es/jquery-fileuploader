@@ -119,10 +119,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 * Cropper.
 * Rotate buttons.
 * ~~Any method to detect if an image has changed.~~
+* ~~Triggers a fileUploaderChange event. ~~
 
 (If you have any suggestion please feel free to contact me)
 
 ## History of Changes
+### v1.1.3
+loadFrom
+fill
+fileUploaderChange trigger.
+
 ### v1.1.2
 ExtraTrigger option.
 Autoplay option.
