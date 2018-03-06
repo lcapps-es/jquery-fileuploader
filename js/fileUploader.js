@@ -442,6 +442,8 @@ var FileUploader = {
 					img.onload = function( ev ){
 						var canvas = document.getElementById( canvasId );
 						FileUploader.Image.resizeImage( img, canvas );
+
+						$(el).parent().trigger( 'fileUploaderChange' );
 					}
 
 				}
